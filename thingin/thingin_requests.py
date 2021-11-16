@@ -1,8 +1,8 @@
 import requests
 
 
-thingin_api_url = "https://coreapi.qlf.thinginthefuture.com/"
-saref_value_iri = "https://w3id.org/saref#hasValue"
+thingin_api_url = "https://coreapi.di.thinginthefuture.com/"
+saref_value_iri = "valeur"
 
 
 def post_initial_data(data, access_token):

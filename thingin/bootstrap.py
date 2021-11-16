@@ -9,7 +9,7 @@ def append_my_uuid(my_uuid, data):
         node["_iri"] += "-" + str(my_uuid)
         if "_outE" in node:
             for edge in node["_outE"]:
-                edge["_iri"] += "-" + str(my_uuid)
+                edge["_targetIRI"] += "-" + str(my_uuid)
     return data
 
 def set_domain(domain_to_insert, data):
@@ -19,14 +19,14 @@ def set_domain(domain_to_insert, data):
         node["_domain"] = node["_domain"].replace(inserted_domain_string, domain_to_insert)
         if "_outE" in node:
             for edge in node["_outE"]:
-                edge["_iri"] = edge["_iri"].replace(inserted_domain_string, domain_to_insert)
+                edge["_targetIRI"] = edge["_targetIRI"].replace(inserted_domain_string, domain_to_insert)
     return data
 
 def set_ip(ip_to_insert, data):
     inserted_ip_string = "|local-ip|"
     for node in data:
-        if "http://www.w3.org/ns/tdo#href" in node:
-            node["http://www.w3.org/ns/tdo#href"] = node["http://www.w3.org/ns/tdo#href"].replace(inserted_ip_string, ip_to_insert)
+        if "lien-http" in node:
+            node["lien-http"] = node["lien-http"].replace(inserted_ip_string, ip_to_insert)
     return data
 
 

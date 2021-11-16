@@ -71,6 +71,9 @@ def update_data(cam):
     print("Motion data update", motion_update_result.text)
     print("Luminance data update",luminance_update_result.text)
 
+    print(motion_update_result)
+    print(luminance_update_result)
+
 
 # ##BOOTSTRAP DATA UUIDS LOADING FROM THINGIN RESPONSE"
 luminance_iri = domain_to_insert+"androidIPCam.luminance-"+str(my_uuid)
