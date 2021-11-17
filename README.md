@@ -97,10 +97,12 @@ et étendrons la description de notre environnement à des concepts issus du web
     - Entrer l'url de requête GET suivante à droite du menu déroulant : /avatars/$uuid?Read-Mode=depth&Read-Depth=10, en remplaçant $uuid par l'uuid récupéré précédemment
     - Le résultat de cette requête devrait contenir uniquement vos noeuds/relations et pas ceux de vos camarades
 
-- Retrouver tous les téléphones : nous allons utiliser le language Cypher pour retrouver uniquement les téléphones des différents étudiants. Le résultat de la requête va donc évoluer en fonction de l'avancée des groupes. 
 
+## Extension du schéma de données et ajouts de nouveaux objets à l'environnement
 
-
+De la même façon que pour les noeuds pour les pièces et le téléphone, déclarer des noeuds pour vos autres devices, ainsi que pour enrichir l'environnement partagé (pièces adjacentes, mobilier de la salle de classe, murs, fenêtres...). Vous pouvez commencer par modéliser les parties manquantes du schéma indiquées dans la première figure, i.e. chacun de vos bureaux et les relier à vos moniteurs et à la salle de classe avec la relation appropriée. Pour ce faire vous pouvez modifier le code source du projet et créer un nouveau payload de données en prenant exemple sur les données existantes. 
+ 
+Il vous manquera des types d'objets (classes) et des types de relation pour modéliser l'environnement. Vous allez utiliser directement l'API de thingin pour les ajouter et vous en servir dans le code. La procédure est la suivante (elle vous sera montrée en détail) :  Onglet Develop -> Thingin API reference -> "Labels : Manipulate the labels of the tipod". 
 
 
 # Partie 2 : 
@@ -110,17 +112,30 @@ Dans cette partie nous allons :
 - utiliser effectuer des requêtes plus abouties sur l'environnement. 
 - proposer des améliorations pour pallier les difficultées rencontrées dues à notre modèle de données simpliste.  
 
+## Requêtage simple de l'environnement 
 
+- Retrouver tous les téléphones : nous allons utiliser le language Cypher pour retrouver uniquement les téléphones des différents étudiants. Le résultat de la requête va donc évoluer en fonction de l'avancée des groupes. 
+
+```
+{
+  "tcypher": "MATCH ({label : 'Telephone'}) RETURN *"
+}
+```
+- A l'aide du wiki, construisez une requête pour ...
+
+## Mise à jour des données de capteur en temps réel
 - Retrouver les endpoints de l’API android ipcam dans les propriétés des nœuds correspondants aux différents capteurs à travers l’interface ThingIn. Pour afficher les propriétés d'un noeud il suffit de cliquer dessus
 - Lancer le script de mise à jour des données dans thingin, ```main.py```, qui accède à l'API du device, récupère les données et accède à l'API de thingin pour mettre à jour les noeuds précédemment créés de façon continue (environ toutes les 5 secondes)
 - Vérifier la mise à jour des données dans thingin via la visualisation
 - Les données qui ont été uploadées dans thingin par le bootstrapper sont décrites dans le fichier payloads.py. Nous allons créer de nouvelles données pour les compléter.
-    - Construire un nouveau payload pour les noeuds (pièces et torche du device) ainsi créés, les assigner à une nouvelle variable dans payloads.py
-    - Compléter ces données avec d'autres objets de l'environnement physiques (pièces et relations entre elles), en prenant en exemple les données existantes. 
+    - Construire un nouveau payload pour les noeuds (pièces et torche du device) ainsi créés, les assigner à une nouvelle variable dans payloads.py 
         - Modifier bootstrap.py pour utiliser la variable contenant les nouveaux noeuds
     - Compléter les données manquantes pour le device IPcam (noeud décrivant le status actuel de la torche). Pour accéder à l'état de la torche et faire sa mise jour dans thingin, les fichiers thingin_requests.py et main.py doivent être édités : 
         - Définir une nouvelle fonction put_torch_status_thingin dans thinin_requests.py, en prenant exemple sur les fonctions existantes (motion et light)
         - Utiliser la fonction précédemment créée dans main.py, dans la fonction update_data(cam)
 - Vérifier de nouveau la mise à jour des données dans thingin via la visualisation (relancer le script main.py)
-- Optionnel : de la même façon que pour les nouveaux noeuds pour les pièces et la torche, déclarer des noeuds pour vos autres devices. 
-    - Les classes à utiliser pour déclarer vos objets peuvent être recherchés dans thingin : Onglet explore -> ontology lookup service -> search classes in OLS
+
+- Construisez désormais les requêtes suivantes : 
+	- Retrouver les téléphones dont le capteur de luminosité a une valeur inférieure à X 
+	- Retrouver le bureau le plus illuminé 
+	- ...
