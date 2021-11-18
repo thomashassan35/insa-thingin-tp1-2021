@@ -119,36 +119,6 @@ initial_data_json = [
       "nom": "enableTorch"
     },
     {
-      "_iri": "|inserted_domain|couloir",
-      "_domain": "|inserted_domain|",
-      "_labels": [
-        "Piece"
-      ],
-      "_visibility": 0,
-      "nom": "couloir",
-      "_outE": [
-        {
-          "_label": "connecte",
-          "_targetIRI": "|inserted_domain|salle_de_classe_insa"
-        }
-      ]
-    },
-    {
-      "_iri": "|inserted_domain|salle_de_classe_insa",
-      "_domain": "|inserted_domain|",
-      "_labels": [
-        "Piece"
-      ],
-      "_visibility": 0,
-      "nom": "salle de classe de ce TP",
-      "_outE": [
-        {
-          "_label": "connecte",
-          "_targetIRI": "|inserted_domain|couloir"
-        }
-      ]
-    },
-    {
       "_iri": "|inserted_domain|androidIPCam.torchOff",
       "_domain": "|inserted_domain|",
       "_labels": [

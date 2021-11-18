@@ -54,7 +54,7 @@ et étendrons la description de notre environnement à des concepts issus du web
 		$IP_CAM_PWD : Password du serveur android IP Webcam (à définir dans l’application)
 		$TORCH_ON_OFF : ON ou OFF (pour allumer / éteindre la torche du device, utilisé uniquement pour tester l’installation)
 		Exemple : 
-		``` python3 bootstrap.py "Bearer 12345" "http://www.example.com/insa/" "thomas_hassan" "192.168.1.18" "Test" "Test" "ON" ```
+		``` python3 bootstrap.py "Bearer 12345" "http://thingin.orange.com/users/insa-stu-2021/" "thomas_hassan" "192.168.1.18" "Test" "Test" "ON" ```
 		
 	Exemple de configuration via l'IDE (pycharm) : ![config](ide_pycharm.PNG)
 
@@ -79,11 +79,16 @@ et étendrons la description de notre environnement à des concepts issus du web
         ``` [{"uuid": "b02531f3-8c48-480b-8259-aa256b7dbff3", "iri": "http://www.example.com/insa/androidIPCam-a82aeb9d-31a5-3f52-8714-4c47ae4e74fd", "isIn": []}, {"uuid":  .... ] ```
         où uuid est l'identifiant interne du noeud, et iri son identifiant global, suffixé par votre hash pour ce TP.
 - Requêter l'ensemble de l'environnement partagé par une requête au portail thingin: 
-    Onglet Explore -> Explore ThingIn Database -> Sélectionner la requête "Test your own domain" dans le menu déroulant -> cocher advanced mode -> entrer la requête suivante (requête de type POST)
+    Onglet Explore -> Explore ThingIn Database -> Sélectionner la requête "INSA TP2021" dans le menu déroulant : 
+
+
+![config](request_INSA.PNG)
+
+- Cela affichera la requête ci-dessous suivante que vous pouvez exécuter directement (requête de type POST), cliquez sur count results ou get results pour afficher les données.
     ```
     {	
       "query": {
-        "$domain": "http://www.example.com/insa/2021/"
+        "$domain": "http://thingin.orange.com/users/insa-stu-2021/"
       },
       "view": {}
     }
@@ -121,21 +126,37 @@ Dans cette partie nous allons :
   "tcypher": "MATCH ({label : 'Telephone'}) RETURN *"
 }
 ```
-- A l'aide du wiki, construisez une requête pour ...
+
+Une autre façon d'exprimer la requête est la suivante, plus compacte :
+```
+{
+  "tcypher": "MATCH (a:`Capteur`) RETURN a"
+}
+```
+
+On peut également affiner la requête avec un fitlre sur ses propriétés, par exemple en précisant le domaine dans lequel nous effectuons notre requête : 
+```
+{
+  "tcypher": "MATCH ({label: 'Telephone', domain:'http://www.example.com/insa/'}) RETURN *"
+}
+```
+
+- A l'aide de l'exemple ci-dessus, construisez une requête pour retrouver des objets en définissant un fitlre sur leur nom ou leur description.
 
 ## Mise à jour des données de capteur en temps réel
 - Retrouver les endpoints de l’API android ipcam dans les propriétés des nœuds correspondants aux différents capteurs à travers l’interface ThingIn. Pour afficher les propriétés d'un noeud il suffit de cliquer dessus
 - Lancer le script de mise à jour des données dans thingin, ```main.py```, qui accède à l'API du device, récupère les données et accède à l'API de thingin pour mettre à jour les noeuds précédemment créés de façon continue (environ toutes les 5 secondes)
-- Vérifier la mise à jour des données dans thingin via la visualisation
-- Les données qui ont été uploadées dans thingin par le bootstrapper sont décrites dans le fichier payloads.py. Nous allons créer de nouvelles données pour les compléter.
-    - Construire un nouveau payload pour les noeuds (pièces et torche du device) ainsi créés, les assigner à une nouvelle variable dans payloads.py 
-        - Modifier bootstrap.py pour utiliser la variable contenant les nouveaux noeuds
-    - Compléter les données manquantes pour le device IPcam (noeud décrivant le status actuel de la torche). Pour accéder à l'état de la torche et faire sa mise jour dans thingin, les fichiers thingin_requests.py et main.py doivent être édités : 
-        - Définir une nouvelle fonction put_torch_status_thingin dans thinin_requests.py, en prenant exemple sur les fonctions existantes (motion et light)
-        - Utiliser la fonction précédemment créée dans main.py, dans la fonction update_data(cam)
-- Vérifier de nouveau la mise à jour des données dans thingin via la visualisation (relancer le script main.py)
+- Vérifier la mise à jour des données dans thingin via la visualisation. Vous pouvez rafraichir le résultat de la requête via l'interface web (Refresh result)
 
-- Construisez désormais les requêtes suivantes : 
-	- Retrouver les téléphones dont le capteur de luminosité a une valeur inférieure à X 
-	- Retrouver le bureau le plus illuminé 
-	- ...
+![config](graph_valeur.PNG)
+
+- A l'aide des exemples de requêtes précédents et du wiki https://wiki.thinginthefuture.com/public/TCypherQuery, construisez désormais les requêtes suivantes : 
+    - Retrouver votre téléphone à partir d'un de ses identifiants unique (iri ou uuid)
+    - Idem mais retrouvez également **via ses relations** tous ses capteurs
+    - Retrouver les téléphones dont le capteur de luminosité a une valeur inférieure à X 
+    - Retrouver le capteur le plus illuminé de deux téléphones différents
+
+- Compléter les données pour le device IPcam, en ajoutant un noeud de type Capteur et une propriété pour décrire le status actuel de la torche (on/off). Pour créer le noeud, on peut directement utiliser l'API de thingin sans éditer le code (montré pendant le TP). Pour accéder à l'état de la torche et faire sa mise jour temps réel dans thingin, les fichiers ```thingin_requests.py``` et ```main.py``` doivent être édités : 
+        - Définir une nouvelle fonction ```put_torch_status_thingin``` dans ```thinin_requests.py```, en prenant exemple sur les fonctions existantes (motion et light)
+        - Utiliser la fonction précédemment créée dans ```main.py```, dans la fonction ```update_data(cam)```
+- Vérifier de nouveau la mise à jour des données dans thingin via la visualisation (relancer le script main.py)

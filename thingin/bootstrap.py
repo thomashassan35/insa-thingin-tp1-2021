@@ -9,7 +9,8 @@ def append_my_uuid(my_uuid, data):
         node["_iri"] += "-" + str(my_uuid)
         if "_outE" in node:
             for edge in node["_outE"]:
-                edge["_targetIRI"] += "-" + str(my_uuid)
+                if not str(edge["_targetIRI"]).__contains__("salle_de_classe_insa") and not str(edge["_targetIRI"]).__contains__("couloir"):
+                    edge["_targetIRI"] += "-" + str(my_uuid)
     return data
 
 def set_domain(domain_to_insert, data):

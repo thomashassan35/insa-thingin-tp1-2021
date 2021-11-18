@@ -68,11 +68,8 @@ def print_data(cam):
 def update_data(cam):
     motion_update_result = put_motion_event_thingin(uuid=motion_uuid, iri=motion_iri, motion_data=cam.sensor_data["motion_event"], access_token=token)
     luminance_update_result = put_luminance_thingin(uuid=luminance_uuid, iri=luminance_iri, luminance_data=cam.sensor_data["light"], access_token=token)
-    print("Motion data update", motion_update_result.text)
-    print("Luminance data update",luminance_update_result.text)
-
-    print(motion_update_result)
-    print(luminance_update_result)
+    print("Motion data update result: ", motion_update_result)
+    print("Luminance data update: ", luminance_update_result)
 
 
 # ##BOOTSTRAP DATA UUIDS LOADING FROM THINGIN RESPONSE"
