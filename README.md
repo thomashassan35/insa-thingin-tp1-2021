@@ -46,8 +46,8 @@ et étendrons la description de notre environnement à des concepts issus du web
 	- Tous les scripts python3 utilisés dans le TP ci-dessous peuvent être lancés depuis un IDE ou un interpréteur avec les arguments suivants (ordre des arguments et syntaxe à respecter): 
 	``` "$THING_TOKEN" "$THINGIN_DOMAIN" "$PRENOM_NOM" "$IPCAM_IP" "$IP_CAM_USER" "$IP_CAM_PWD" "$TORCH_ON_OFF" ``` 
 
-		$THING_TOKEN : votre token à récupérer sur https://tech2.thinginthefuture.com (voir ci-après dans le descriptif du TP)
-		$THINGIN_DOMAIN : domaine à utiliser où vos données seront enregistrées dans thingin (1 domaine commun à tous les étudiants). Le domaine à utiliser est : http://www.example.com/insa/
+		$THING_TOKEN : votre token à récupérer sur https://tech.di.thinginthefuture.com (voir ci-après dans le descriptif du TP)
+		$THINGIN_DOMAIN : domaine à utiliser où vos données seront enregistrées dans thingin (1 domaine commun à tous les étudiants). Le domaine à utiliser est : ```http://thingin.orange.com/users/insa-stu-2021/```
 		$PRENOM_NOM : utilisé pour générer une clé unique (peut être une autre passphrase, tant qu'elle n'est pas partagée par d'autres étudiants). 
 		$IPCAM_IP" : l'ip locale de votre device android où est installé android ipcam
 		$IP_CAM_USER : Nom d'utilisateur du serveur android IP Webcam (à définir dans l’application)
@@ -63,9 +63,9 @@ et étendrons la description de notre environnement à des concepts issus du web
 # Partie 1:
 ## Test d'installation et visualisation des données initiales : 
 - Récupérer l'ip de votre device android 
-- Se connecter à https://tech2.thinginthefuture.com. Les credentials à utiliser sont : 
-    Email : thingin-demo@orange.com
-    Password : thingin-demo147
+- Se connecter à https://tech.di.thinginthefuture.com. Les credentials à utiliser sont : 
+    Email : insa-stu-2021@fake.orange.com
+    Password : insa-stu742-2021
 - Récupérer son token : onglet Develop -> Get My Thing in token -> Copy to Clipboard
 - Lancer le serveur android ipcam sur votre device. Si nécessaire changer la résolution vidéo et le login/mot de passe. Si pas de login mot de passe dans l'application, laissez les arguments vides ("") en lançant les scripts
 - Tester l'environnement : exécuter le script torch_test.py en utilisant les arguments correspondants à votre installation. Exemple : ``` python3 torch_test.py  "Bearer 12345" "http://www.example.com/insa/" "thomas_hassan" "192.168.1.18" "Test" "Test" "ON" ```
